@@ -22,9 +22,9 @@ def Main():
     height = 300
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
-    x = (screen_width / 2) - (width / 2)
-    y = (screen_height / 2) - (height / 2)
-    root.geometry("%dx%d+%d+%d" % (width, height, x, y))
+    x = int((screen_width / 2) - (width / 2))
+    y = int((screen_height / 2) - (height / 2))
+    root.geometry(f"{width}x{height}+{x}+{y}")
     Top = Frame(root, width=600)
     Top.pack(side=TOP)
     img = Image.open("./DG.png")  # import dasgeeklogo
