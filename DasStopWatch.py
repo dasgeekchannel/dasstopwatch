@@ -27,7 +27,7 @@ def Main():
     root.geometry("%dx%d+%d+%d" % (width, height, x, y))
     Top = Frame(root, width=600)
     Top.pack(side=TOP)
-    img = Image.open("/Users/dasgeek/Documents/Python/DG.png")  # import dasgeeklogo
+    img = Image.open("./DG.png")  # import dasgeeklogo
     photo = ImageTk.PhotoImage(img)  # picture file you want to import location
     lab = Label(image=photo).place(x=120, y=100)  # img location on x,y axis
     stopWatch = StopWatch(root)
