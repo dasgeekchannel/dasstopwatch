@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Special thanks to https://www.sourcecodester.com for the template
 # Modified and geek'i'fied by DasGeek
 # www.dasgeekcommunity.com
