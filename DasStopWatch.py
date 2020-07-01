@@ -90,14 +90,11 @@ class StopWatch(Frame):
             self.nextTime = time.time() - self.startTime
             self.SetTime(self.nextTime)
             self.onRunning = 0
-            self.segment = print(self.nextTime)  # print segment times to console
-            orig_stdout = sys.stdout
-            f = open('segments.txt', 'a+')  # a+ appends to a new text file segments.txt each time you hit stop
-            sys.stdout = f
-            for i in range(1):
-                print(self.nextTime)  # printing segment time
-            sys.stdout = orig_stdout
-            f.close()  # close out file
+            print(self.nextTime)  # print segment times to console
+            with open('segments.txt', 'a+') as fd:
+                fd.write('%.2f\n' % self.nextTime)
+                # by using the `with` keyword as shown
+                # fd.close() is implicit once you get out of the block
 
     # Define Exit button actions
     def Exit(self):
