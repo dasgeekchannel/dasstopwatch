@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Special thanks to https://www.sourcecodester.com for the template
 # Modified and geek'i'fied by DasGeek
 # www.dasgeekcommunity.com
@@ -22,12 +23,12 @@ def Main():
     height = 300
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
-    x = (screen_width / 2) - (width / 2)
-    y = (screen_height / 2) - (height / 2)
-    root.geometry("%dx%d+%d+%d" % (width, height, x, y))
+    x = int((screen_width / 2) - (width / 2))
+    y = int((screen_height / 2) - (height / 2))
+    root.geometry(f"{width}x{height}+{x}+{y}")
     Top = Frame(root, width=600)
     Top.pack(side=TOP)
-    img = Image.open("/Users/dasgeek/Documents/Python/DG.png")  # import dasgeeklogo
+    img = Image.open("./DG.png")  # import dasgeeklogo
     photo = ImageTk.PhotoImage(img)  # picture file you want to import location
     lab = Label(image=photo).place(x=120, y=100)  # img location on x,y axis
     stopWatch = StopWatch(root)
@@ -89,14 +90,11 @@ class StopWatch(Frame):
             self.nextTime = time.time() - self.startTime
             self.SetTime(self.nextTime)
             self.onRunning = 0
-            self.segment = print(self.nextTime)  # print segment times to console
-            orig_stdout = sys.stdout
-            f = open('segments.txt', 'a+')  # a+ appends to a new text file segments.txt each time you hit stop
-            sys.stdout = f
-            for i in range(1):
-                print(self.nextTime)  # printing segment time
-            sys.stdout = orig_stdout
-            f.close()  # close out file
+            print(self.nextTime)  # print segment times to console
+            with open('segments.txt', 'a+') as fd:
+                fd.write('%.2f\n' % self.nextTime)
+                # by using the `with` keyword as shown
+                # fd.close() is implicit once you get out of the block
 
     # Define Exit button actions
     def Exit(self):
