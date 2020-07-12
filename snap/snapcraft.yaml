@@ -1,0 +1,37 @@
+name: dasstopwatch
+version: git
+summary: A simple stopwatch
+description: This is a stop watch app used for Destination Linux. Written in Python. Completely in testing.
+base: core18
+confinement: strict
+grade: devel
+
+layout:
+        /usr/share/tcltk:
+                bind: $SNAP/usr/share/tcltk
+
+parts:
+        dasstopwatch:
+                plugin: python
+                python-version: python3
+                source: .
+                stage-packages:
+                        - python3-pip
+                        - python3-tk 
+                        - python3-pil
+                        - python3-pil.imagetk
+
+        files:
+                plugin: dump
+                source: .
+
+apps:
+        dasstopwatch:
+                command: python3 $SNAP/DasStopWatch.py
+                plugs:
+                        - desktop
+                        - desktop-legacy
+                        - wayland
+                        - x11
+                        - home
+
