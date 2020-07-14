@@ -28,7 +28,7 @@ def Main():
     root.geometry(f"{width}x{height}+{x}+{y}")
     Top = Frame(root, width=600)
     Top.pack(side=TOP)
-    img = Image.open("./das-stopwatch-banner.png")  # import das-stopwatch logo
+    img = Image.open("./das-stopwatch-logo.png")  # import das-stopwatch logo
     photo = ImageTk.PhotoImage(img)  # picture file you want to import location
     lab = Label(image=photo).place(x=120, y=100)  # img location on x,y axis
     stopWatch = StopWatch(root)
