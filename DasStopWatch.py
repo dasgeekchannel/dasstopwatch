@@ -12,7 +12,15 @@ import PIL
 from PIL import Image, ImageTk  # import package to allow for image display (Pillow)
 import time  # used to make calculations for stopwatch
 import sys  # used to export printed segment times to a txt file
+import os # used to read the SNAP environment variable, to access resources 
 
+# We'll reference the path to segments.txt multiple times, so let's put it in a variable
+
+if "SNAP" in os.environ: # If running from the snap,...
+    path = os.environ.get("HOME") # ... segments.txt will be placed in snap's home dir (~/snap/dasstopwatch/current) 
+else:
+    path = "." # ... otherwise, segments.txt will be placed in current directory
+segments_txt = "{}/segments.txt".format(path)
 
 def Main():
     global root
@@ -28,7 +36,8 @@ def Main():
     root.geometry(f"{width}x{height}+{x}+{y}")
     Top = Frame(root, width=600)
     Top.pack(side=TOP)
-    img = Image.open("./das-stopwatch-logo.png")  # import das-stopwatch logo
+    resources = os.environ.get("SNAP", ".") # Set resources to the root of the snap, and defaults to "."
+    img = Image.open("{}/das-stopwatch-logo.png".format(resources))  # import dasgeeklogo
     photo = ImageTk.PhotoImage(img)  # picture file you want to import location
     lab = Label(image=photo).place(x=120, y=100)  # img location on x,y axis
     stopWatch = StopWatch(root)
@@ -46,7 +55,13 @@ def Main():
     Title = Label(Top, text="DasStop Watch", font=("arial", 20), fg="white", bg="black")
     Title.pack(fill=X)
     root.config(bg="black")
+    # Check if segements.txt already exists. We might not want to append to it, so we'll delete it if needed.
+    if os.path.exists(segments_txt):
+        result = tkMessageBox.askquestion('DLN', 'File {} already exits. Do you want to delete it?'.format(segments_txt), icon='warning')
+        if result == 'yes':
+            os.remove(segments_txt)
     root.mainloop()
+
 
 
 class StopWatch(Frame):
@@ -91,7 +106,7 @@ class StopWatch(Frame):
             self.SetTime(self.nextTime)
             self.onRunning = 0
             print(self.nextTime)  # print segment times to console
-            with open('segments.txt', 'a+') as fd:
+            with open(segments_txt, 'a+') as fd:
                 fd.write('%.2f\n' % self.nextTime)
                 # by using the `with` keyword as shown
                 # fd.close() is implicit once you get out of the block
@@ -101,6 +116,12 @@ class StopWatch(Frame):
         result = tkMessageBox.askquestion('DLN', 'Are you sure you want to exit?', icon='warning')
         if result == 'yes':
             root.destroy()
+            # If we have recorded some segments, we dump the path on the console, so we can easily copy/paste the path.
+            #  Otherwise, we notify that we recorded nothing.
+            if os.path.exists(segments_txt):
+                print("segments.txt is located at {}".format(segments_txt))
+            else:
+                print("No segments were recorded")
             exit()
 
     # Define Reset button actions
