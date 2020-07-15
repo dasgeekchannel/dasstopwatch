@@ -37,7 +37,7 @@ def Main():
     Top = Frame(root, width=600)
     Top.pack(side=TOP)
     resources = os.environ.get("SNAP", ".") # Set resources to the root of the snap, and defaults to "."
-    img = Image.open("{}/DG.png".format(resources))  # import dasgeeklogo
+    img = Image.open("{}/das-stopwatch-logo.png".format(resources))  # import dasgeeklogo
     photo = ImageTk.PhotoImage(img)  # picture file you want to import location
     lab = Label(image=photo).place(x=120, y=100)  # img location on x,y axis
     stopWatch = StopWatch(root)
