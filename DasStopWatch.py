@@ -105,7 +105,7 @@ class StopWatch(Frame):
             self.nextTime = time.time() - self.startTime
             self.SetTime(self.nextTime)
             self.onRunning = 0
-            print(self.nextTime)  # print segment times to console
+            print("The segment time was {r:1.2f}".format(r=self.nextTime))  # print segment times to console
             with open(segments_txt, 'a+') as fd:
                 fd.write('%.2f\n' % self.nextTime)
                 # by using the `with` keyword as shown
